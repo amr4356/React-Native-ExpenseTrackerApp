@@ -4,4 +4,4 @@ function ManageExpense(){
     return <Text>ManageExpense screen</Text>
 }
 
-export default ManageExpense();
+export default ManageExpense;
