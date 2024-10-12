@@ -3,7 +3,7 @@ import Input from "./Input";
 import { useState } from "react";
 import Button from "../UI/Button";
 
-export default function ExpenseForm({onCancel,onSubmit,submitButtonLabel}) {
+export default function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
   const [inputValues, setInputValues] = useState({
     amount: "",
     date: "",
@@ -19,9 +19,16 @@ export default function ExpenseForm({onCancel,onSubmit,submitButtonLabel}) {
     });
   }
 
-  function submitHandler(){
+  function submitHandler() {
+    const expenseData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
 
+    onSubmit(expenseData);
   }
+
 
   return (
     <View style={styles.form}>
@@ -31,9 +38,7 @@ export default function ExpenseForm({onCancel,onSubmit,submitButtonLabel}) {
           label="Amount"
           textInputConfig={{
             keyboardType: "decimal-pad",
-            onChangeText: () => {
-              inputChangedHandler("amount");
-            },
+            onChangeText: inputChangedHandler.bind(this,'amount'),
             value: inputValues.amount,
           }}
           style={styles.rowInput}
@@ -43,9 +48,7 @@ export default function ExpenseForm({onCancel,onSubmit,submitButtonLabel}) {
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
-            onChangeText: () => {
-              inputChangedHandler("date");
-            },
+            onChangeText: inputChangedHandler.bind(this,'date'),
             value: inputValues.date,
           }}
           style={styles.rowInput}
@@ -57,9 +60,7 @@ export default function ExpenseForm({onCancel,onSubmit,submitButtonLabel}) {
           multiline: true,
           //   autoCapitalize: 'sentences' // sentences is default
           // autoCorrect: false // default is true
-          onChangeText: () => {
-            inputChangedHandler("description");
-          },
+          onChangeText: inputChangedHandler.bind(this,'description'),
           value: inputValues.description,
         }}
       />
