@@ -2,12 +2,18 @@ import { StyleSheet, Text, View } from "react-native";
 import Input from "./Input";
 import { useState } from "react";
 import Button from "../UI/Button";
+import { getFormattedDate } from "../../util/date";
 
-export default function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
+export default function ExpenseForm({
+  onCancel,
+  onSubmit,
+  submitButtonLabel,
+  defaultValues,
+}) {
   const [inputValues, setInputValues] = useState({
-    amount: "",
-    date: "",
-    description: "",
+    amount: defaultValues ? defaultValues.amount.toString() : "",
+    date: defaultValues ? getFormattedDate(defaultValues.date) : "",
+    description: defaultValues ? defaultValues.description : "",
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
@@ -29,7 +35,6 @@ export default function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
     onSubmit(expenseData);
   }
 
-
   return (
     <View style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
@@ -38,7 +43,7 @@ export default function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
           label="Amount"
           textInputConfig={{
             keyboardType: "decimal-pad",
-            onChangeText: inputChangedHandler.bind(this,'amount'),
+            onChangeText: inputChangedHandler.bind(this, "amount"),
             value: inputValues.amount,
           }}
           style={styles.rowInput}
@@ -48,7 +53,7 @@ export default function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
-            onChangeText: inputChangedHandler.bind(this,'date'),
+            onChangeText: inputChangedHandler.bind(this, "date"),
             value: inputValues.date,
           }}
           style={styles.rowInput}
@@ -60,7 +65,7 @@ export default function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
           multiline: true,
           //   autoCapitalize: 'sentences' // sentences is default
           // autoCorrect: false // default is true
-          onChangeText: inputChangedHandler.bind(this,'description'),
+          onChangeText: inputChangedHandler.bind(this, "description"),
           value: inputValues.description,
         }}
       />
