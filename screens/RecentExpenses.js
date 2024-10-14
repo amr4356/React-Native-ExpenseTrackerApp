@@ -5,11 +5,13 @@ import { getDateMinusDays } from "../util/date";
 import { fetchExpenses } from "../util/http";
 
 function RecentExpenses() {
-  const { expenses } = useContext(ExpensesContext);
+  const { expenses ,setExpenses} = useContext(ExpensesContext);
+
 
   useEffect(() => {
     async function getExpenses() {
-      const expensesData=await fetchExpenses();
+      const expenses=await fetchExpenses();
+      setExpenses(expenses);
     }
 
     getExpenses();
