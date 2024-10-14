@@ -10,7 +10,7 @@ export async function storeExpense(expenseData) {
   );
 
   const id = response.data.name;
-  
+
   return id;
 }
 
@@ -30,4 +30,11 @@ export async function fetchExpenses() {
   }
 
   return expesnes;
+}
+
+export function updateExpense(id,expenseData){
+   return axios.put(BACKEND_URL+`/expenses/${id}.json`,expenseData);
+}
+export function deleteExpense(id){
+    return axios.delete(BACKEND_URL+`/expenses/${id}.json`);
 }
